@@ -6,4 +6,11 @@
     <string name="menu_forth">4. EV3 Move Forward</string>
     <string name="menu_fifth">5. EV3 Play Tune</string>
     <string name="menu_sixth">6. Disconnect EV3</string>
+    <string name="forward1" />
+    <string name="backward1" />
+    <string name="backward">Backward</string>
+    <string name="forward">Forward</string>
+    <string name="speed">Speed</string>
+    <string name="textview">TextView</string>
+    <string name="textView">TextView</string>
 </resources>

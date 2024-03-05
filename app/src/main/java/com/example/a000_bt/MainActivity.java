@@ -74,10 +74,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         speedLabel.setText(Integer.toString(speedSlider.getProgress()));
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     private View.OnTouchListener buttonListener(boolean backwards) {
         return (view, event) -> {
-            switch(event.getAction()) {
+            switch (event.getAction()) {
                 case MotionEvent.ACTION_UP:
                     stopMoving();
                     break;
@@ -114,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
 
                     cpf_EV3MoveMotor(0);
 
-                } catch (InterruptedException ex) {}
+                } catch (InterruptedException ex) {
+                }
             });
 
             isRunning = true;
@@ -309,54 +312,59 @@ public class MainActivity extends AppCompatActivity {
     // Communication Developer Kit Page 27
     // 4.2.2 Start motor B & C forward at power 50 for 3 rotation and braking at destination
     private void cpf_EV3MoveMotor(int power) {
-        try {
-            byte[] buffer = new byte[20];       // 0x12 command length
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    byte[] buffer = new byte[20];       // 0x12 command length
 
-            buffer[0] = (byte) (20-2);
-            buffer[1] = 0;
+                    buffer[0] = (byte) (20 - 2);
+                    buffer[1] = 0;
 
-            buffer[2] = 34;
-            buffer[3] = 12;
+                    buffer[2] = 34;
+                    buffer[3] = 12;
 
-            buffer[4] = (byte) 0x80;
+                    buffer[4] = (byte) 0x80;
 
-            buffer[5] = 0;
-            buffer[6] = 0;
+                    buffer[5] = 0;
+                    buffer[6] = 0;
 
-            buffer[7] = (byte) 0xad; // OP code
-            buffer[8] = 0; //
+                    buffer[7] = (byte) 0xad; // OP code
+                    buffer[8] = 0; //
 
-            buffer[9] = (byte) 0x06; // Output
+                    buffer[9] = (byte) 0x06; // Output
 
-            buffer[10] = (byte) 0x81;
-            buffer[11] = (byte) power;
+                    buffer[10] = (byte) 0x81;
+                    buffer[11] = (byte) power;
 
-            buffer[12] = 0;
+                    buffer[12] = 0;
 
-            buffer[13] = (byte) 0x82;
-            buffer[14] = (byte) 0x84;
-            buffer[15] = -1;
+                    buffer[13] = (byte) 0x82;
+                    buffer[14] = (byte) 0x84;
+                    buffer[15] = -1;
 
-            buffer[16] = (byte) 0x82;
-            buffer[17] = (byte) 0xB4;
-            buffer[18] = (byte) 0x03;
+                    buffer[16] = (byte) 0x82;
+                    buffer[17] = (byte) 0xB4;
+                    buffer[18] = (byte) 0x03;
 
-            buffer[19] = 1;
+                    buffer[19] = 1;
 
-            cv_os.write(buffer);
-            cv_os.flush();
-        }
-        catch (Exception e) {
-            cv_label01.setText("Error in MoveForward(" + e.getMessage() + ")");
-        }
+                    cv_os.write(buffer);
+                    cv_os.flush();
+                } catch (Exception e) {
+                    cv_label01.setText("Error in MoveForward(" + e.getMessage() + ")");
+                }
+            }
+        });
     }
+
 
     // 4.2.5 Play a 1Kz tone at level 2 for 1 sec.
     private void cpf_EV3PlayTone() {
         try {
             byte[] buffer = new byte[17];       // 0x0f command length
 
-            buffer[0] = (byte) (17-2);
+            buffer[0] = (byte) (17 - 2);
             buffer[1] = 0;
 
             buffer[2] = 34;
@@ -383,8 +391,7 @@ public class MainActivity extends AppCompatActivity {
 
             cv_os.write(buffer);
             cv_os.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             cv_label02.setText("Error in MoveForward(" + e.getMessage() + ")");
         }
     }
