@@ -13,4 +13,7 @@
     <string name="speed">Speed</string>
     <string name="textview">TextView</string>
     <string name="textView">TextView</string>
+    <string name="play_sound">Play Sound</string>
+    <string name="text_view">TextView</string>
+    <string name="forward_">Forward</string>
 </resources>
